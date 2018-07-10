@@ -47,12 +47,20 @@ hex_hashes = [
 ]
 
 # bytes.fromhex to get all the hashes in binary
+hashes = [bytes.fromhex(h) for h in hex_hashes]
 # if the number of hashes is odd, duplicate the last one
+if len(hashes) % 2 == 1:
+    hashes.append(hashes[-1])
 # initialize parent level
+parent_level = []
 # skip by two: use range(0, len(hashes), 2)
+for i in range(0, len(hashes), 2):
     # calculate merkle_parent of i and i+1 hashes
+    parent = merkle_parent(hashes[i], hashes[i+1])
     # print the hash's hex
+    print(parent.hex())
     # add parent to parent level
+    parent_level.append(parent)
 ```
 
 ### Test Driven Example
